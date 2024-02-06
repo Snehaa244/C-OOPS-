@@ -1,0 +1,79 @@
+//Objects communicate with one another by sending and receiving information to each other. A
+message for an object is a request for execution of a procedure and therefore will invoke a
+function in the receiving object that generates the desired results. Message passing involves
+specifying the name of the object, the name of the function and the information to be sent.
+Message Passing is nothing but sending and receiving of information by the objects same as
+people exchange information. So this helps in building systems that simulate real life. Following
+are the basic steps in message passing.
+ Creating classes that define objects and its behavior.
+ Creating objects from class definitions
+ Establishing communication among objects
+
+#include <iostream>
+#include <string>
+#include <queue>
+
+class Message {
+public:
+    std::string content;
+    int priority;
+
+    Message(std::string content, int priority) {
+        this->content = content;
+        this->priority = priority;
+    }
+};
+
+class MessageQueue {
+private:
+    std::queue<Message> messages;
+
+public:
+    void push(Message message) {
+        messages.push(message);
+    }
+
+    Message pop() {
+        Message message = messages.front();
+        messages.pop();
+        return message;
+    }
+
+    bool isEmpty() {
+        return messages.empty();
+    }
+};
+
+class MessageHandler {
+private:
+    MessageQueue queue;
+
+public:
+    void handleMessage() {
+        while (!queue.isEmpty()) {
+            Message message = queue.pop();
+            std::cout << "Received message: " << message.content << std::endl;
+        }
+    }
+
+    void sendMessage(std::string content, int priority) {
+        Message message(content, priority);
+        queue.push(message);
+    }
+};
+
+int main() {
+    MessageHandler handler;
+
+    handler.sendMessage("Hello world", 1);
+    handler.sendMessage("How are you?", 2);
+    handler.sendMessage("Goodbye", 3);
+
+    handler.handleMessage();
+
+    return 0;
+}
+//output
+//Received message: Hello world
+//Received message: How are you?
+//Received message: Goodbye

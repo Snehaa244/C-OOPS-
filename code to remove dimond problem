@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+class A {
+public:
+void display()
+{
+cout<<"A Class Display Called.."<<endl;
+}
+};
+class B : virtual public A{
+public:
+void display()
+{
+cout<<"B Class Display Called.."<<endl;
+}
+};
+class C :virtual public A{
+public:
+void display()
+{
+cout<<"C Class Display Called.."<<endl;
+}
+};
+class D : public B, public C{
+//contains two display() functions
+};
+int main()
+{
+A *a=new D();
+B *b=new D();
+C *c=new D();
+a->display();
+b->display();
+c->display();
+return 0;
+}
